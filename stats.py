@@ -195,22 +195,5 @@ class PlayerMatchStats(Base):
     yellow_cards = Column(Integer, default=0)
     red_cards = Column(Integer, default=0)
 
-    wh_points = Column(Float)
-
     UniqueConstraint(match_id, player_id)
     Index('pls_m_st_crit_idx', player_id, league_id, loc, date)
-
-
-class PlayerValuation(Base):
-    __tablename__ = 'players_valuations'
-
-    id = Column(Integer, primary_key=True)
-    week = Column(Integer)
-    league_id = Column(ForeignKey('leagues.id'), index=True)
-    league = relationship('League')
-    player_id = Column(ForeignKey('players.id'), index=True)
-    player = relationship('Player')
-    valuation = Column(Float)
-
-    UniqueConstraint(week, league_id, player_id)
-    Index('pls_pts', week, league_id, player_id)
